@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "standard:verify": "node scripts/verify/verify.mjs .",
-    "verify": "pnpm standard:verify",
+    "verify": "pnpm standard:verify && pnpm test",
+    "test": "node scripts/verify/self-test.mjs",
     "bootstrap": "node scripts/bootstrap/bootstrap.mjs"
   },
   "dependencies": {
