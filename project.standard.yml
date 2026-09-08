@@ -6,4 +6,6 @@ project:
   name: STANDARD
   version: 0.1.0
   description: Versioned engineering standard, templates, policies and verification tooling.
+git:
+  flow: develop
 exceptions: []
