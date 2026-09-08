@@ -29,6 +29,13 @@
         "description": {"type": "string"}
       }
     },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "flow": {"type": "string", "enum": ["mainline", "develop"]}
+      }
+    },
     "exceptions": {
       "type": "array",
       "default": [],
