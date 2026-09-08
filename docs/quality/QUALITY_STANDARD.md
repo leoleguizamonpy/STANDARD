@@ -49,6 +49,14 @@ Each automated gate MUST produce an unambiguous PASS/FAIL outcome and non-zero p
 
 A release may be called `CERTIFIED` only when all mandatory gates for the adopted STANDARD version/profile are PASS and there are no unresolved P0/P1 blockers.
 
+Formal certification MUST identify the exact commit/HEAD SHA that was evaluated. A later commit is a different candidate and MUST NOT inherit prior certification automatically.
+
+When certification is PR-based, the project SHOULD verify that the tested head/merge candidate matches the revision actually promoted. Critical release flows SHOULD use expected-head protection or an equivalent control against merging a moved head.
+
 ## 8. CI parity
 
 Local verification and CI SHOULD execute equivalent authoritative checks to reduce discrepancies between developer and integration environments.
+
+## 9. Evidence integrity
+
+Status labels such as `IMPLEMENTED`, `TESTED`, `INTEGRATED` and `CERTIFIED` SHOULD remain distinct when the project uses formal certification. Evidence must correspond to the state being claimed; repository tooling or prepared infrastructure is not proof of a real external production condition.
