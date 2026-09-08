@@ -19,7 +19,7 @@ Regla: `[x]` significa evidencia implementada en repositorio. Un gate que depend
 
 ## FASE 1 — Gobernanza — COMPLETE
 
-- [x] cadena de autoridad.
+- [x] autoridad scoped-by-responsibility.
 - [x] MUST / SHOULD / MAY.
 - [x] excepciones.
 - [x] ADR policy.
@@ -90,13 +90,13 @@ Diferidos a una versión posterior:
 ## FASE 6 — Contrato de adopción — COMPLETE
 
 - [x] `project.standard.yml`.
-- [x] JSON Schema.
+- [x] JSON Schema draft 2020-12.
 - [x] versión.
 - [x] perfil.
 - [x] metadata de proyecto.
 - [x] Git flow.
 - [x] excepciones.
-- [x] validación ejecutable con AJV/YAML.
+- [x] validación ejecutable con AJV 2020 + YAML.
 - [x] STANDARD adopta su propio contrato.
 
 **Gate 6: PASS.**
@@ -121,7 +121,8 @@ Diferidos a una versión posterior:
 - [x] architecture/documentation/security gates.
 - [x] no arbitrary universal coverage percentage.
 - [x] P0/P1/P2/P3 severity.
-- [x] certification rule.
+- [x] certification bound to exact commit/HEAD.
+- [x] distinction IMPLEMENTED / TESTED / INTEGRATED / CERTIFIED.
 - [x] CI parity rule.
 
 **Gate 8: PASS.**
@@ -132,13 +133,14 @@ Diferidos a una versión posterior:
 - [x] `pnpm standard:verify`.
 - [x] required files.
 - [x] YAML parsing.
-- [x] schema validation.
+- [x] JSON Schema 2020-12 validation.
 - [x] VERSION consistency.
 - [x] basic forbidden sensitive files.
 - [x] readable PASS/FAIL.
 - [x] exit 0 / non-zero semantics.
+- [x] first CI failure detected a real verifier defect and was corrected.
 
-**Gate 9: IMPLEMENTED; awaiting CI evidence on PR.**
+**Gate 9: awaiting clean CI PASS after fix.**
 
 ## FASE 10 — Bootstrap — IMPLEMENTED
 
@@ -150,7 +152,7 @@ Diferidos a una versión posterior:
 - [x] refuse non-empty destination.
 - [x] generated project is re-verified in self-test.
 
-**Gate 10: IMPLEMENTED; awaiting CI evidence.**
+**Gate 10: awaiting clean CI PASS.**
 
 ## FASE 11 — CI — IMPLEMENTED
 
@@ -160,22 +162,25 @@ Diferidos a una versión posterior:
 - [x] conformance verification.
 - [x] self-tests.
 - [x] failure propagates to CI.
+- [x] failure evidence was observed on PR #1.
 
-**Gate 11: awaiting first observed PASS.**
+**Gate 11: awaiting first clean PASS.**
 
-## FASE 12 — Auditoría del ecosistema — PARTIAL
+## FASE 12 — Auditoría del ecosistema — COMPLETE
 
 - [x] TOURNA reviewed.
 - [x] ACTIO reviewed.
 - [x] LEOLEGUIZAMON reviewed.
-- [ ] SEOT reviewed.
-- [ ] BrandADN reviewed.
+- [x] SEOT reviewed.
+- [x] BrandADN reviewed.
 - [x] common/difference matrix.
 - [x] cross-project rules extracted.
 - [x] product-specific rules excluded.
 - [x] Git-flow assumption corrected from evidence.
+- [x] flat authority assumption corrected from SEOT evidence.
+- [x] exact-revision certification rule extracted from BrandADN/Tourna/ACTIO patterns.
 
-**Gate 12: sufficient evidence for current baseline; full 5-project audit still open before final v1 certification.**
+**Gate 12: PASS.**
 
 ## FASE 13 — Dogfooding — IMPLEMENTED
 
@@ -185,13 +190,12 @@ Diferidos a una versión posterior:
 - [x] bootstrap fixture is generated.
 - [x] generated fixture must PASS verifier.
 
-**Gate 13: awaiting CI evidence.**
+**Gate 13: awaiting clean CI PASS.**
 
 ## FASE 14 — v1.0.0 Certification — PENDING
 
-- [ ] CI PASS on integration PR.
-- [ ] SEOT comparison.
-- [ ] BrandADN comparison.
+- [ ] CI PASS on integration PR after verifier fix.
+- [x] five-project ecosystem comparison.
 - [ ] final contradiction audit.
 - [ ] no P0/P1 blockers.
 - [ ] update version references from `0.1.0` to `1.0.0`.
@@ -206,19 +210,19 @@ Diferidos a una versión posterior:
 1. **Specify** — implemented.
 2. **Declare** — implemented.
 3. **Generate** — implemented.
-4. **Verify** — implemented.
-5. **Enforce** — implemented in CI, pending observed PASS.
+4. **Verify** — implemented; clean CI evidence pending.
+5. **Enforce** — implemented; failure already proven, PASS pending.
 
 # Immediate path to v1.0.0
 
 ```text
-develop baseline
-→ PR to main
-→ CI evidence
-→ audit SEOT + BrandADN
-→ correct contradictions
-→ final verify
-→ version 1.0.0
-→ release PR/merge
+latest develop
+→ PR #1 CI PASS
+→ final contradiction audit
+→ remove P0/P1 blockers
+→ promote version 1.0.0
+→ release verification on exact HEAD
+→ merge
+→ post-merge verification
 → tag v1.0.0
 ```
