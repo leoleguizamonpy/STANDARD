@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
-const STANDARD_VERSION = '1.0.0';
+const STANDARD_VERSION = '1.1.0';
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'standard-self-test-'));
 const validDir = path.join(tempRoot, 'valid');
 const invalidDir = path.join(tempRoot, 'invalid');
@@ -14,6 +14,7 @@ fs.mkdirSync(invalidDir, { recursive: true });
 const baseFiles = {
   'README.md': '# Fixture\n',
   'FOUNDATION.md': '# FOUNDATION\n',
+  'ROADMAP.md': '# ROADMAP\n\nIMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED\n',
   'AGENTS.md': '# AGENTS\n',
   'CHANGELOG.md': '# Changelog\n',
   'VERSION': '0.1.0\n',
@@ -66,6 +67,11 @@ if (generated.status !== 0) {
   process.exit(1);
 }
 
+if (!fs.existsSync(path.join(generatedDir, 'ROADMAP.md'))) {
+  console.error('SELF TEST: FAIL — bootstrap did not generate ROADMAP.md');
+  process.exit(1);
+}
+
 if (generatedVerification.status !== 0) {
   console.error('SELF TEST: FAIL — generated project is not STANDARD-conformant');
   console.error(generatedVerification.stdout);
@@ -77,4 +83,5 @@ console.log('STANDARD SELF TEST: PASS');
 console.log(`- standard version => ${STANDARD_VERSION}`);
 console.log('- valid fixture => PASS');
 console.log('- invalid fixture => FAIL');
+console.log('- bootstrap roadmap => PRESENT');
 console.log('- bootstrap fixture => GENERATED + PASS');
