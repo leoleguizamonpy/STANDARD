@@ -1,0 +1,25 @@
+name: STANDARD Branch Cleanup
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.event.head_commit.message == 'chore: enable one-shot branch cleanup'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Delete obsolete remote branches
+        run: |
+          set -euo pipefail
+          git push origin --delete develop || true
+          git push origin --delete docs/v1-certification || true
+          git push origin --delete release/v1.0.0 || true
+          git push origin --delete maintenance/branch-cleanup || true
