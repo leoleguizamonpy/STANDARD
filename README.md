@@ -4,6 +4,12 @@
 
 Su función es definir cómo se inicializa, organiza, desarrolla, verifica, audita, certifica y evoluciona un proyecto, sin contener lógica específica de negocio de ningún producto.
 
+## Estado
+
+**STANDARD v1.0.0 — CERTIFIED**
+
+La certificación se apoya en verificación reproducible de integración, release candidate y `main` post-merge. La evidencia formal se conserva en `docs/certification/V1.0.0.md`.
+
 ## Principio rector
 
 > STANDARD gobierna cómo construimos. Cada producto decide qué construimos.
@@ -58,6 +64,7 @@ STANDARD/
 ├── docs/
 │   ├── architecture/
 │   ├── audit/
+│   ├── certification/
 │   ├── development/
 │   ├── documentation/
 │   ├── git/
@@ -219,8 +226,6 @@ STANDARD v1 se contrastó con patrones presentes en:
 
 Ver `docs/audit/ECOSYSTEM_PATTERN_MATRIX.md`.
 
-## Estado de release
+## Evolución
 
-Versión candidata: `1.0.0`.
-
-La rama `release/v1.0.0` debe pasar `pnpm verify` en CI sobre su HEAD exacto antes de integrarse a `main` y etiquetarse como `v1.0.0`.
+`1.0.0` es la primera baseline estable. Nuevos perfiles, migradores, scanners avanzados o generadores por stack deben incorporarse mediante nuevas versiones sin reescribir retrospectivamente las reglas certificadas de v1.0.0.
