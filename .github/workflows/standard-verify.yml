@@ -27,5 +27,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Verify STANDARD
-        run: pnpm standard:verify
+      - name: Run full STANDARD verification
+        run: pnpm verify
