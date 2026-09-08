@@ -32,16 +32,18 @@ CERTIFICATION
 RELEASE
 ```
 
-## Capacidades actuales
+## Capacidades v1.0.0
 
-STANDARD ya puede:
+STANDARD puede:
 
 1. definir reglas universales de arquitectura, Git, documentación, seguridad y calidad;
 2. declarar adopción mediante `project.standard.yml`;
 3. generar un proyecto mínimo mediante bootstrap;
 4. verificar conformidad básica de forma ejecutable;
 5. ejecutar casos positivos/negativos de self-test;
-6. bloquear CI cuando la verificación falla.
+6. bloquear CI cuando la verificación falla;
+7. diferenciar implementación, testing, integración y certificación;
+8. vincular una certificación formal al commit/HEAD exacto evaluado.
 
 ## Arquitectura física
 
@@ -69,6 +71,7 @@ STANDARD/
 │   └── library/
 ├── templates/
 ├── schemas/
+├── policies/
 ├── scripts/
 │   ├── bootstrap/
 │   └── verify/
@@ -79,13 +82,13 @@ STANDARD/
 
 Perfiles `saas` y `ai-system` están deliberadamente diferidos hasta que existan reglas comprobadas suficientes para justificarlos.
 
-## Instalación de STANDARD
+## Instalación
 
 Requisitos:
 
 - Node.js 20+
 - Corepack
-- pnpm
+- pnpm 10.15.1
 
 ```bash
 corepack enable
@@ -146,7 +149,7 @@ Cada proyecto adopta una versión concreta mediante `project.standard.yml`.
 ```yaml
 standard:
   repository: leoleguizamonpy/STANDARD
-  version: 0.1.0
+  version: 1.0.0
   profile: web-application
 project:
   name: NEXUS
@@ -192,14 +195,32 @@ main
 
 `mainline` es preferible cuando una rama permanente de integración no aporta valor real. `develop` es una decisión explícita del proyecto, no una obligación universal.
 
+## Autoridad scoped-by-responsibility
+
+STANDARD no usa una jerarquía documental plana para todo:
+
+- `FOUNDATION.md` gobierna identidad, propósito, alcance e invariantes;
+- arquitectura gobierna boundaries y dirección de dependencias;
+- contratos gobiernan semántica funcional dentro de su dominio;
+- governance gobierna flujo de desarrollo e integración;
+- ADRs registran decisiones dentro de un alcance concreto.
+
+Ninguna fuente debe reclamar autoridad fuera de su responsabilidad.
+
 ## Fuente empírica
 
-STANDARD v1 no se diseña desde teoría aislada. Las reglas transversales se contrastan con patrones ya presentes en TOURNA, ACTIO y LEOLEGUIZAMON y se seguirán contrastando con SEOT y BrandADN.
+STANDARD v1 se contrastó con patrones presentes en:
+
+- TOURNA
+- ACTIO
+- LEOLEGUIZAMON
+- SEOT
+- BrandADN
 
 Ver `docs/audit/ECOSYSTEM_PATTERN_MATRIX.md`.
 
-## Estado
+## Estado de release
 
-Versión de desarrollo actual: `0.1.0`.
+Versión candidata: `1.0.0`.
 
-No debe etiquetarse como `v1.0.0` ni declararse `CERTIFIED` hasta que los gates finales de `docs/development/DEVELOPMENT_CHECKLIST.md` estén cerrados con evidencia.
+La rama `release/v1.0.0` debe pasar `pnpm verify` en CI sobre su HEAD exacto antes de integrarse a `main` y etiquetarse como `v1.0.0`.
