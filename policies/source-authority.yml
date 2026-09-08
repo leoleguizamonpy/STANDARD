@@ -1,0 +1,20 @@
+version: 1
+purpose: Define canonical authority precedence for adopting projects.
+authority:
+  - level: 1
+    source: applicable-law-and-mandatory-obligations
+  - level: 2
+    source: security-critical-constraints
+  - level: 3
+    source: FOUNDATION.md
+  - level: 4
+    source: adopted-standard-and-profile
+  - level: 5
+    source: accepted-adrs
+  - level: 6
+    source: repository-policies-and-schemas
+  - level: 7
+    source: implementation
+rules:
+  lower_authority_must_not_contradict_higher: true
+  superseded_documents_have_current_authority: false
