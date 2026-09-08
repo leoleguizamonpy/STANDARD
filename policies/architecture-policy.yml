@@ -1,0 +1,29 @@
+version: 1
+purpose: Express universal architecture invariants in machine-readable form.
+principles:
+  domain_ownership:
+    canonical_owner_per_business_concept: true
+  dependency_direction:
+    preferred:
+      - interfaces->application
+      - application->domains
+      - application->core
+      - infrastructure->contracts
+    forbid_domain_dependency_on:
+      - ui-framework
+      - transport-framework
+      - vendor-specific-infrastructure
+    allow_exception_with_governance: true
+  cycles:
+    cross_domain_cycles_forbidden: true
+  shared_code:
+    require_semantic_reason: true
+    false_shared_abstractions_forbidden: true
+  contracts:
+    explicit_cross_boundary_contracts_recommended: true
+  physical_architecture:
+    top_level_directories_require_defined_responsibility: true
+    ceremonial_empty_layers_forbidden: true
+profiles:
+  may_extend: true
+  may_weaken_universal_must: false

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/leoleguizamonpy/STANDARD/schemas/project.standard.schema.json",
+  "title": "STANDARD Project Adoption",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["standard", "project"],
+  "properties": {
+    "standard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "version", "profile"],
+      "properties": {
+        "repository": {"const": "leoleguizamonpy/STANDARD"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "profile": {
+          "type": "string",
+          "enum": ["web-application", "api", "static-web", "library"]
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "description": {"type": "string"}
+      }
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "flow": {"type": "string", "enum": ["mainline", "develop"]}
+      }
+    },
+    "exceptions": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "rule", "reason", "owner", "review_date"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "rule": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1},
+          "scope": {"type": "string"},
+          "risk": {"type": "string"},
+          "owner": {"type": "string", "minLength": 1},
+          "review_date": {"type": "string", "format": "date"},
+          "compensating_control": {"type": "string"}
+        }
+      }
+    }
+  }
+}

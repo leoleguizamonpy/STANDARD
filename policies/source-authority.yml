@@ -1,0 +1,42 @@
+version: 1
+purpose: Define scoped canonical authority for adopting projects.
+universal_precedence:
+  - applicable-law-and-mandatory-obligations
+  - security-critical-constraints
+  - adopted-standard-and-profile
+scoped_authority:
+  foundation:
+    owns:
+      - product-identity
+      - purpose
+      - scope
+      - invariants
+      - non-goals
+  architecture:
+    owns:
+      - technical-boundaries
+      - dependency-direction
+      - structural-responsibilities
+  contracts:
+    owns:
+      - functional-semantics-within-domain
+      - external-and-cross-boundary-contracts
+  governance:
+    owns:
+      - development-flow
+      - integration-rules
+      - certification-process
+  adrs:
+    owns:
+      - recorded-decisions-within-declared-scope
+  roadmap:
+    owns:
+      - sequence
+      - current-status
+    does_not_own:
+      - product-definition
+rules:
+  source_must_not_claim_authority_outside_scope: true
+  overlapping_sources_resolve_by_declared_responsibility: true
+  superseded_documents_have_current_authority: false
+  implementation_must_conform_to_applicable_authorities: true
