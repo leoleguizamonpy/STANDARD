@@ -1,271 +1,224 @@
 # STANDARD v1 — DEVELOPMENT CHECKLIST
 
-Objetivo: cerrar una primera versión utilizable y certificable de STANDARD en una sola jornada de desarrollo.
+Objetivo: cerrar una primera versión utilizable, verificable y certificable de STANDARD.
 
-Los checks son binarios: `[x]` significa evidencia presente en repositorio y validación superada. No usar porcentajes subjetivos para declarar terminado.
+Regla: `[x]` significa evidencia implementada en repositorio. Un gate que depende de CI no se considera certificado hasta observar su ejecución PASS.
 
-## FASE 0 — Bootstrap
+## FASE 0 — Bootstrap — COMPLETE
 
 - [x] Repositorio creado.
-- [x] `README.md` creado.
-- [x] `FOUNDATION.md` creado.
-- [x] `AGENTS.md` creado.
-- [x] Arquitectura lógica y física inicial documentada.
-- [ ] `VERSION` creado con `0.1.0` durante desarrollo.
-- [ ] `CHANGELOG.md` creado.
-- [ ] rama `develop` establecida después del bootstrap.
+- [x] `README.md`.
+- [x] `FOUNDATION.md`.
+- [x] `AGENTS.md`.
+- [x] `VERSION = 0.1.0`.
+- [x] `CHANGELOG.md`.
+- [x] arquitectura lógica/física inicial.
+- [x] `develop` creado para STANDARD.
+
+**Gate 0: PASS.**
+
+## FASE 1 — Gobernanza — COMPLETE
+
+- [x] cadena de autoridad.
+- [x] MUST / SHOULD / MAY.
+- [x] excepciones.
+- [x] ADR policy.
+- [x] SemVer.
+- [x] deprecación.
+- [x] migración explícita.
+- [x] source authority policy machine-readable.
+
+**Gate 1: PASS.**
+
+## FASE 2 — Repositorio y Git — COMPLETE
+
+- [x] `main` como stable/certified.
+- [x] `mainline` flow.
+- [x] `develop` flow.
+- [x] ramas temporales/prefixes.
+- [x] Conventional Commits.
+- [x] Pull Requests.
+- [x] merge strategy.
+- [x] release/tagging.
+- [x] PR template.
+- [x] repository hygiene.
+
+**Gate 2: PASS.**
+
+## FASE 3 — Documentación — COMPLETE
+
+- [x] documentos obligatorios.
+- [x] autoridad documental.
+- [x] synchronization rule.
+- [x] anti-duplication rule.
+- [x] README template.
+- [x] FOUNDATION template.
+- [x] AGENTS template.
+- [x] ADR template.
+
+**Gate 3: PASS.**
+
+## FASE 4 — Arquitectura — COMPLETE
+
+- [x] arquitectura lógica.
+- [x] arquitectura física.
+- [x] domain ownership.
+- [x] dependency direction.
+- [x] cycle prohibition.
+- [x] core/domain/application/infrastructure/interface guidance.
+- [x] false shared abstraction rule.
+- [x] profile extension rule.
+- [x] architecture policy machine-readable.
+
+**Gate 4: PASS documental/policy.** La automatización profunda de import boundaries queda profile/stack-specific.
+
+## FASE 5 — Perfiles v1 — COMPLETE
+
+- [x] `web-application`.
+- [x] `api`.
+- [x] `static-web`.
+- [x] `library`.
+- [x] perfiles no implementados no son aceptados por schema/bootstrap.
+
+Diferidos a una versión posterior:
+
+- [ ] `saas`.
+- [ ] `ai-system`.
+
+**Gate 5: PASS para perfiles v1 soportados.**
+
+## FASE 6 — Contrato de adopción — COMPLETE
+
+- [x] `project.standard.yml`.
+- [x] JSON Schema.
+- [x] versión.
+- [x] perfil.
+- [x] metadata de proyecto.
+- [x] Git flow.
+- [x] excepciones.
+- [x] validación ejecutable con AJV/YAML.
+- [x] STANDARD adopta su propio contrato.
+
+**Gate 6: PASS.**
+
+## FASE 7 — Seguridad — COMPLETE BASELINE
+
+- [x] secretos prohibidos.
+- [x] `.env` / `.env.example` policy.
+- [x] dependency hygiene.
+- [x] input validation at trust boundaries.
+- [x] auth/authz scoped by applicability.
+- [x] secure errors/logging.
+- [x] P0/P1 security blockers.
+- [x] basic forbidden sensitive-file verifier.
 
-**Gate 0:** repositorio posee autoridad, propósito y arquitectura base.
-
----
-
-## FASE 1 — Gobernanza
-
-- [ ] Definir cadena de autoridad formal.
-- [ ] Definir MUST / SHOULD / MAY.
-- [ ] Definir política de excepciones.
-- [ ] Definir ADR.
-- [ ] Definir compatibilidad y versionado.
-- [ ] Definir política de deprecación.
-- [ ] Definir política de migración entre versiones.
-
-**Gate 1:** ninguna regla puede cambiar sin mecanismo de decisión y trazabilidad.
-
----
-
-## FASE 2 — Estándar de repositorio y Git
-
-- [ ] Definir estructura mínima universal.
-- [ ] Definir naming de archivos y directorios.
-- [ ] Definir ramas permitidas.
-- [ ] Definir `main` y `develop`.
-- [ ] Definir feature/fix/refactor/docs/chore/audit/release/hotfix.
-- [ ] Definir Conventional Commits.
-- [ ] Definir política de Pull Requests.
-- [ ] Definir estrategia de merge.
-- [ ] Definir release/tagging.
-- [ ] Crear template de PR.
-
-**Gate 2:** el ciclo Git de cualquier nuevo proyecto es inequívoco.
-
----
-
-## FASE 3 — Documentación
-
-- [ ] Definir documentos obligatorios por proyecto.
-- [ ] Crear `README.template.md`.
-- [ ] Crear `FOUNDATION.template.md`.
-- [ ] Crear `AGENTS.template.md`.
-- [ ] Crear `ADR.template.md`.
-- [ ] Definir actualización obligatoria de documentación.
-- [ ] Definir autoridad documental.
-- [ ] Evitar duplicación documental.
-
-**Gate 3:** un proyecto nuevo puede generar su documentación mínima desde templates.
-
----
-
-## FASE 4 — Arquitectura
-
-- [x] Definir arquitectura lógica de STANDARD.
-- [x] Definir arquitectura física de STANDARD.
-- [ ] Definir principios de separación de dominios.
-- [ ] Definir dirección de dependencias.
-- [ ] Definir reglas contra ciclos.
-- [ ] Definir core vs domains vs infrastructure/interfaces cuando aplique.
-- [ ] Definir cómo los perfiles pueden extender la arquitectura.
-- [ ] Crear política machine-readable de arquitectura.
-
-**Gate 4:** las fronteras arquitectónicas pueden explicarse y verificarse.
-
----
-
-## FASE 5 — Perfiles
-
-Construir únicamente perfiles mínimos v1:
-
-- [ ] `web-application`
-- [ ] `api`
-- [ ] `static-web`
-
-Posponer a v1.1 salvo necesidad real:
-
-- [ ] `saas`
-- [ ] `ai-system`
-- [ ] `library`
-
-Cada perfil v1 debe declarar:
-
-- [ ] propósito;
-- [ ] estructura recomendada;
-- [ ] documentos obligatorios;
-- [ ] quality gates;
-- [ ] reglas adicionales;
-- [ ] excepciones permitidas.
-
-**Gate 5:** puede clasificarse un proyecto nuevo sin inventar una arquitectura desde cero.
-
----
-
-## FASE 6 — Contrato de adopción
-
-- [ ] Crear `project.standard.schema.json`.
-- [ ] Crear `project.standard.example.yml`.
-- [ ] Declarar versión STANDARD.
-- [ ] Declarar perfil.
-- [ ] Declarar excepciones.
-- [ ] Declarar metadata mínima del proyecto.
-- [ ] Validar configuración contra schema.
-
-**Gate 6:** un repositorio consumidor puede declarar de forma machine-readable qué versión y perfil adopta.
-
----
-
-## FASE 7 — Seguridad base
-
-- [ ] Definir secretos prohibidos en repositorio.
-- [ ] Definir `.env.example` y `.env` rules.
-- [ ] Definir dependency hygiene.
-- [ ] Definir input validation cuando aplique.
-- [ ] Definir autenticación/autorización como reglas de perfil, no universales.
-- [ ] Definir manejo seguro de errores/logs.
-- [ ] Definir vulnerabilidades críticas como release blocker.
-
-**Gate 7:** ningún proyecto conforme puede aprobar con fallas críticas conocidas de seguridad.
-
----
-
-## FASE 8 — Calidad y testing
-
-- [ ] Definir lint gate.
-- [ ] Definir typecheck gate cuando aplique.
-- [ ] Definir test gate.
-- [ ] Definir build gate.
-- [ ] Definir architecture gate.
-- [ ] Definir documentation gate.
-- [ ] Definir security gate.
-- [ ] Definir policy para tests mínimos sin imponer cobertura arbitraria universal.
-
-**Gate 8:** “funciona en mi máquina” no puede equivaler a “certificado”.
-
----
-
-## FASE 9 — Verificador ejecutable
-
-- [ ] Elegir runtime mínimo del verificador.
-- [ ] Crear `standard:verify`.
-- [ ] Verificar archivos obligatorios.
-- [ ] Verificar `project.standard.yml`.
-- [ ] Verificar schema.
-- [ ] Verificar estructura base.
-- [ ] Verificar forbidden files/patterns básicos.
-- [ ] Emitir salida PASS/FAIL legible.
-- [ ] Código de salida 0 en PASS.
-- [ ] Código de salida != 0 en FAIL.
-
-**Gate 9:** STANDARD deja de ser solo documentación.
-
----
-
-## FASE 10 — Bootstrap de proyectos
-
-- [ ] Crear plantilla mínima de proyecto.
-- [ ] Crear comando/script de bootstrap v1.
-- [ ] Seleccionar perfil.
-- [ ] Generar `project.standard.yml`.
-- [ ] Generar documentación base.
-- [ ] No sobrescribir archivos existentes sin confirmación explícita del CLI.
-- [ ] Verificar proyecto generado automáticamente.
-
-**Gate 10:** puede iniciarse un proyecto nuevo desde STANDARD sin copiar manualmente archivos.
-
----
-
-## FASE 11 — CI
-
-- [ ] Crear workflow de verificación.
-- [ ] Ejecutar verificador en push/PR.
-- [ ] Ejecutar tests del propio STANDARD.
-- [ ] Fallar CI ante no conformidad.
-- [ ] Prohibir certificación si CI falla.
-
-**Gate 11:** las reglas no dependen de disciplina manual.
-
----
-
-## FASE 12 — Auditoría de proyectos existentes
-
-Extraer patrones comprobados, sin importar lógica de negocio.
-
-- [ ] TOURNA revisado.
-- [ ] ACTIO revisado.
-- [ ] SEOT revisado.
-- [ ] BrandADN revisado.
-- [ ] LEOLEGUIZAMON revisado.
-- [ ] matriz común/diferencia creada.
-- [ ] reglas transversales incorporadas.
-- [ ] reglas específicas excluidas.
-
-**Gate 12:** STANDARD v1 refleja experiencia real del ecosistema, no teoría inventada.
-
----
-
-## FASE 13 — Dogfooding
-
-- [ ] STANDARD se valida contra sus propias reglas aplicables.
-- [ ] Crear un proyecto fixture `examples/web-app`.
-- [ ] Fixture PASS verificado.
-- [ ] Fixture inválido controlado produce FAIL.
-- [ ] No existen reglas documentadas imposibles de ejecutar o interpretar.
-
-**Gate 13:** el estándar puede aplicarse a sí mismo y demostrar casos positivo/negativo.
-
----
-
-## FASE 14 — Certificación v1.0.0
-
-- [ ] Todos los gates críticos PASS.
-- [ ] Auditoría final sin bloqueadores P0/P1.
-- [ ] `VERSION` actualizado a `1.0.0`.
-- [ ] `CHANGELOG.md` actualizado.
-- [ ] README refleja uso real.
-- [ ] documentación sin contradicciones conocidas.
-- [ ] tag `v1.0.0` preparado.
-- [ ] release candidate validado.
-
-**Gate final:** `STANDARD v1.0.0 CERTIFIED` solo puede declararse después de evidencia verificable.
-
----
-
-# Priorización para terminar hoy
-
-## P0 — obligatorio para una v1 útil
-
-Fases: 0, 1, 2, 3, 4, 6, 7, 8, 9, 11, 13, 14.
-
-## P1 — obligatorio para demostrar reutilización
-
-- `web-application` profile.
-- `api` profile.
-- bootstrap mínimo.
-- auditoría comparativa de al menos TOURNA + ACTIO + LEOLEGUIZAMON, incorporando solo patrones comprobados.
-
-## P2 — puede ir a v1.1 sin invalidar v1
-
-- perfiles `saas`, `ai-system`, `library`;
-- migrador automático entre versiones;
-- CLI publicado como paquete npm;
-- auditoría completa automatizada de todos los repositorios;
-- generadores avanzados por stack.
-
-# Definición operativa de terminado hoy
-
-No necesitamos construir una plataforma gigantesca. Para cerrar una v1 seria hoy deben existir cinco capacidades reales:
-
-1. **Especificar** cómo se construye.
-2. **Declarar** qué versión/perfil adopta un proyecto.
-3. **Generar** una base mínima.
-4. **Verificar** automáticamente conformidad básica.
-5. **Bloquear** por CI una violación crítica.
-
-Todo lo que no contribuya directamente a esas cinco capacidades se difiere.
+**Gate 7: PASS baseline.** Scanners avanzados quedan profile/stack-specific.
+
+## FASE 8 — Calidad y testing — COMPLETE BASELINE
+
+- [x] definition of done.
+- [x] applicable lint/typecheck/test/build model.
+- [x] architecture/documentation/security gates.
+- [x] no arbitrary universal coverage percentage.
+- [x] P0/P1/P2/P3 severity.
+- [x] certification rule.
+- [x] CI parity rule.
+
+**Gate 8: PASS.**
+
+## FASE 9 — Verificador ejecutable — IMPLEMENTED
+
+- [x] Node 20+ runtime.
+- [x] `pnpm standard:verify`.
+- [x] required files.
+- [x] YAML parsing.
+- [x] schema validation.
+- [x] VERSION consistency.
+- [x] basic forbidden sensitive files.
+- [x] readable PASS/FAIL.
+- [x] exit 0 / non-zero semantics.
+
+**Gate 9: IMPLEMENTED; awaiting CI evidence on PR.**
+
+## FASE 10 — Bootstrap — IMPLEMENTED
+
+- [x] `pnpm bootstrap <name> [profile] [destination]`.
+- [x] supported profile selection.
+- [x] `project.standard.yml` generation.
+- [x] base docs generation.
+- [x] default `mainline` declaration.
+- [x] refuse non-empty destination.
+- [x] generated project is re-verified in self-test.
+
+**Gate 10: IMPLEMENTED; awaiting CI evidence.**
+
+## FASE 11 — CI — IMPLEMENTED
+
+- [x] GitHub Actions workflow.
+- [x] push/PR triggers for `main` and `develop`.
+- [x] dependency install.
+- [x] conformance verification.
+- [x] self-tests.
+- [x] failure propagates to CI.
+
+**Gate 11: awaiting first observed PASS.**
+
+## FASE 12 — Auditoría del ecosistema — PARTIAL
+
+- [x] TOURNA reviewed.
+- [x] ACTIO reviewed.
+- [x] LEOLEGUIZAMON reviewed.
+- [ ] SEOT reviewed.
+- [ ] BrandADN reviewed.
+- [x] common/difference matrix.
+- [x] cross-project rules extracted.
+- [x] product-specific rules excluded.
+- [x] Git-flow assumption corrected from evidence.
+
+**Gate 12: sufficient evidence for current baseline; full 5-project audit still open before final v1 certification.**
+
+## FASE 13 — Dogfooding — IMPLEMENTED
+
+- [x] STANDARD has `project.standard.yml`.
+- [x] valid fixture must PASS.
+- [x] invalid fixture must FAIL.
+- [x] bootstrap fixture is generated.
+- [x] generated fixture must PASS verifier.
+
+**Gate 13: awaiting CI evidence.**
+
+## FASE 14 — v1.0.0 Certification — PENDING
+
+- [ ] CI PASS on integration PR.
+- [ ] SEOT comparison.
+- [ ] BrandADN comparison.
+- [ ] final contradiction audit.
+- [ ] no P0/P1 blockers.
+- [ ] update version references from `0.1.0` to `1.0.0`.
+- [ ] update CHANGELOG for release.
+- [ ] merge certified candidate.
+- [ ] tag `v1.0.0`.
+
+**Gate final: NOT YET CERTIFIED.**
+
+# Five required capabilities
+
+1. **Specify** — implemented.
+2. **Declare** — implemented.
+3. **Generate** — implemented.
+4. **Verify** — implemented.
+5. **Enforce** — implemented in CI, pending observed PASS.
+
+# Immediate path to v1.0.0
+
+```text
+develop baseline
+→ PR to main
+→ CI evidence
+→ audit SEOT + BrandADN
+→ correct contradictions
+→ final verify
+→ version 1.0.0
+→ release PR/merge
+→ tag v1.0.0
+```
