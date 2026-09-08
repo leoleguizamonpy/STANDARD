@@ -6,6 +6,7 @@ import { spawnSync } from 'node:child_process';
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'standard-self-test-'));
 const validDir = path.join(tempRoot, 'valid');
 const invalidDir = path.join(tempRoot, 'invalid');
+const generatedDir = path.join(tempRoot, 'generated');
 fs.mkdirSync(validDir, { recursive: true });
 fs.mkdirSync(invalidDir, { recursive: true });
 
@@ -23,6 +24,8 @@ const baseFiles = {
     'project:',
     '  name: fixture',
     '  version: 0.1.0',
+    'git:',
+    '  flow: mainline',
     'exceptions: []',
     ''
   ].join('\n')
@@ -37,8 +40,11 @@ for (const [name, content] of Object.entries(baseFiles)) {
 }
 
 const verifier = path.resolve('scripts/verify/verify.mjs');
+const bootstrap = path.resolve('scripts/bootstrap/bootstrap.mjs');
 const valid = spawnSync(process.execPath, [verifier, validDir], { encoding: 'utf8' });
 const invalid = spawnSync(process.execPath, [verifier, invalidDir], { encoding: 'utf8' });
+const generated = spawnSync(process.execPath, [bootstrap, 'generated-fixture', 'web-application', generatedDir], { encoding: 'utf8' });
+const generatedVerification = spawnSync(process.execPath, [verifier, generatedDir], { encoding: 'utf8' });
 
 if (valid.status !== 0) {
   console.error('SELF TEST: FAIL — valid fixture did not pass');
@@ -52,6 +58,21 @@ if (invalid.status === 0) {
   process.exit(1);
 }
 
+if (generated.status !== 0) {
+  console.error('SELF TEST: FAIL — bootstrap did not generate a project');
+  console.error(generated.stdout);
+  console.error(generated.stderr);
+  process.exit(1);
+}
+
+if (generatedVerification.status !== 0) {
+  console.error('SELF TEST: FAIL — generated project is not STANDARD-conformant');
+  console.error(generatedVerification.stdout);
+  console.error(generatedVerification.stderr);
+  process.exit(1);
+}
+
 console.log('STANDARD SELF TEST: PASS');
 console.log('- valid fixture => PASS');
 console.log('- invalid fixture => FAIL');
+console.log('- bootstrap fixture => GENERATED + PASS');
