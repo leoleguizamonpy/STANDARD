@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
+const STANDARD_VERSION = '1.0.0';
+const INITIAL_PROJECT_VERSION = '0.1.0';
 const [, , projectName, profile = 'web-application', destinationArg] = process.argv;
 const allowedProfiles = new Set(['web-application', 'api', 'static-web', 'library']);
 
@@ -27,12 +29,12 @@ for (const dir of ['docs/architecture', 'docs/adr', 'src', 'tests', 'scripts']) 
 }
 
 const files = {
-  'README.md': `# ${projectName}\n\nProject generated from leoleguizamonpy/STANDARD.\n\n## STANDARD\n\n- Version: 0.1.0\n- Profile: ${profile}\n- Git flow: mainline\n`,
+  'README.md': `# ${projectName}\n\nProject generated from leoleguizamonpy/STANDARD.\n\n## STANDARD\n\n- Version: ${STANDARD_VERSION}\n- Profile: ${profile}\n- Git flow: mainline\n`,
   'FOUNDATION.md': `# FOUNDATION — ${projectName}\n\n## Problem\n\nTBD\n\n## Purpose\n\nTBD\n\n## Scope\n\nTBD\n\n## Non-goals\n\nTBD\n\n## Domain boundaries\n\nTBD\n\n## Invariants\n\n- TBD\n`,
   'AGENTS.md': `# AGENTS — ${projectName}\n\nFollow FOUNDATION.md, adopted STANDARD rules, ADRs and repository policies. Run required verification before declaring completion.\n`,
-  'CHANGELOG.md': `# Changelog\n\n## 0.1.0\n\n- Initial bootstrap.\n`,
-  'VERSION': '0.1.0\n',
-  'project.standard.yml': `standard:\n  repository: leoleguizamonpy/STANDARD\n  version: 0.1.0\n  profile: ${profile}\nproject:\n  name: ${projectName}\n  version: 0.1.0\ngit:\n  flow: mainline\nexceptions: []\n`
+  'CHANGELOG.md': `# Changelog\n\n## ${INITIAL_PROJECT_VERSION}\n\n- Initial bootstrap.\n`,
+  'VERSION': `${INITIAL_PROJECT_VERSION}\n`,
+  'project.standard.yml': `standard:\n  repository: leoleguizamonpy/STANDARD\n  version: ${STANDARD_VERSION}\n  profile: ${profile}\nproject:\n  name: ${projectName}\n  version: ${INITIAL_PROJECT_VERSION}\ngit:\n  flow: mainline\nexceptions: []\n`
 };
 
 for (const [relativePath, content] of Object.entries(files)) {
@@ -45,7 +47,9 @@ for (const [relativePath, content] of Object.entries(files)) {
 }
 
 console.log('STANDARD BOOTSTRAP: PASS');
+console.log(`STANDARD version: ${STANDARD_VERSION}`);
 console.log(`Project: ${projectName}`);
+console.log(`Project version: ${INITIAL_PROJECT_VERSION}`);
 console.log(`Profile: ${profile}`);
 console.log('Git flow: mainline');
 console.log(`Destination: ${destination}`);
