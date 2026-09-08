@@ -1,12 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import Ajv from 'ajv';
+import { fileURLToPath } from 'node:url';
+import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import YAML from 'yaml';
 
 const target = path.resolve(process.argv[2] ?? '.');
-const standardRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
+const currentFile = fileURLToPath(import.meta.url);
+const standardRoot = path.resolve(path.dirname(currentFile), '../..');
 const schemaPath = path.join(standardRoot, 'schemas/project.standard.schema.json');
 
 const requiredFiles = [
@@ -34,7 +36,7 @@ if (fs.existsSync(configPath)) {
   try {
     const config = YAML.parse(fs.readFileSync(configPath, 'utf8'));
     const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
-    const ajv = new Ajv({ allErrors: true, strict: false });
+    const ajv = new Ajv2020({ allErrors: true, strict: false });
     addFormats(ajv);
     const validate = ajv.compile(schema);
     if (!validate(config)) {
