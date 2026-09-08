@@ -1,18 +1,28 @@
 # Governance Standard
 
-## 1. Authority chain
+## 1. Authority model
 
-Order of authority for any adopting repository:
+Authority is **scoped by responsibility**, not flattened into one universal document order.
 
-1. Applicable law and mandatory external obligations.
-2. Security-critical constraints.
-3. `FOUNDATION.md` of the project.
-4. Adopted STANDARD version and profile.
-5. Approved ADRs.
-6. Repository policies and schemas.
-7. Implementation and local conventions.
+Universal precedence:
 
-Lower layers MUST NOT contradict higher layers.
+1. applicable law and mandatory external obligations;
+2. security-critical constraints;
+3. adopted STANDARD version/profile;
+4. project authorities within their declared responsibility;
+5. implementation/local conventions.
+
+Project authorities normally include:
+
+- `FOUNDATION.md` — product identity, purpose, scope, invariants and non-goals;
+- architecture documentation — technical boundaries and dependency direction;
+- domain/contracts — functional semantics within their owned domain;
+- governance documents — development/integration rules;
+- ADRs — decisions and changes to specific architectural/governance boundaries;
+- schemas/policies — machine-readable constraints;
+- roadmap/status documents — sequence and current state, not product-definition authority.
+
+A source MUST NOT claim authority outside its declared responsibility. When two sources overlap, the one explicitly owning that responsibility prevails, subject to universal obligations above.
 
 ## 2. Normative language
 
@@ -49,6 +59,8 @@ Status values:
 - rejected
 
 Accepted ADRs MUST NOT be silently rewritten. Material changes require a new ADR that supersedes the previous one.
+
+ADRs document decisions; they do not automatically become universal authority over unrelated responsibilities.
 
 ## 5. Versioning
 
