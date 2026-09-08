@@ -32,7 +32,18 @@ CERTIFICATION
 RELEASE
 ```
 
-## Arquitectura física objetivo
+## Capacidades actuales
+
+STANDARD ya puede:
+
+1. definir reglas universales de arquitectura, Git, documentación, seguridad y calidad;
+2. declarar adopción mediante `project.standard.yml`;
+3. generar un proyecto mínimo mediante bootstrap;
+4. verificar conformidad básica de forma ejecutable;
+5. ejecutar casos positivos/negativos de self-test;
+6. bloquear CI cuando la verificación falla.
+
+## Arquitectura física
 
 ```text
 STANDARD/
@@ -41,60 +52,154 @@ STANDARD/
 ├── AGENTS.md
 ├── CHANGELOG.md
 ├── VERSION
+├── project.standard.yml
 ├── docs/
 │   ├── architecture/
+│   ├── audit/
 │   ├── development/
 │   ├── documentation/
 │   ├── git/
-│   ├── quality/
-│   ├── security/
-│   ├── ai/
 │   ├── governance/
-│   └── adr/
+│   ├── quality/
+│   └── security/
 ├── profiles/
 │   ├── web-application/
 │   ├── api/
-│   ├── saas/
-│   ├── ai-system/
 │   ├── static-web/
 │   └── library/
 ├── templates/
 ├── schemas/
-├── policies/
 ├── scripts/
 │   ├── bootstrap/
-│   ├── verify/
-│   └── migrate/
-└── examples/
+│   └── verify/
+└── .github/
+    ├── PULL_REQUEST_TEMPLATE.md
+    └── workflows/
 ```
 
-## STANDARD v1.0.0
+Perfiles `saas` y `ai-system` están deliberadamente diferidos hasta que existan reglas comprobadas suficientes para justificarlos.
 
-La primera versión debe cubrir únicamente reglas transversales ya comprobadas:
+## Instalación de STANDARD
 
-- arquitectura lógica y física;
-- estructura de repositorio;
-- documentación mínima;
-- ramas, commits y PR;
-- gobernanza de agentes IA;
-- seguridad mínima;
-- pruebas;
-- auditoría;
-- quality gates;
-- certificación y versionado.
+Requisitos:
 
-## Regla de adopción
+- Node.js 20+
+- Corepack
+- pnpm
 
-Cada proyecto deberá declarar la versión de STANDARD que adopta mediante `project.standard.yml`.
+```bash
+corepack enable
+pnpm install
+```
+
+## Verificación
+
+```bash
+pnpm verify
+```
+
+El comando ejecuta:
+
+```text
+STANDARD conformance
+→ schema validation
+→ required-file checks
+→ basic secret-file checks
+→ positive fixture
+→ negative fixture
+→ bootstrap generation
+→ verification of generated project
+```
+
+Resultado esperado:
+
+```text
+STANDARD VERIFY: PASS
+STANDARD SELF TEST: PASS
+```
+
+## Crear un proyecto nuevo
+
+```bash
+pnpm bootstrap <project-name> [profile] [destination]
+```
+
+Ejemplo:
+
+```bash
+pnpm bootstrap NEXUS web-application ../NEXUS
+```
+
+Perfiles v1 disponibles:
+
+- `web-application`
+- `api`
+- `static-web`
+- `library`
+
+El bootstrap se niega a sobrescribir un destino no vacío.
+
+## Contrato de adopción
+
+Cada proyecto adopta una versión concreta mediante `project.standard.yml`.
 
 ```yaml
 standard:
   repository: leoleguizamonpy/STANDARD
-  specification: LES
-  version: 1.0.0
+  version: 0.1.0
   profile: web-application
+project:
+  name: NEXUS
+  version: 0.1.0
+git:
+  flow: mainline
+exceptions: []
 ```
+
+La configuración se valida contra `schemas/project.standard.schema.json`.
+
+## Flujos Git soportados
+
+### mainline
+
+```text
+main
+  ↓
+rama temporal
+  ↓
+PR + gates
+  ↓
+main validado
+  ↓
+eliminar rama
+```
+
+### develop
+
+```text
+main
+  ↓
+develop
+  ↓
+rama temporal
+  ↓
+develop
+  ↓
+release
+  ↓
+main
+```
+
+`mainline` es preferible cuando una rama permanente de integración no aporta valor real. `develop` es una decisión explícita del proyecto, no una obligación universal.
+
+## Fuente empírica
+
+STANDARD v1 no se diseña desde teoría aislada. Las reglas transversales se contrastan con patrones ya presentes en TOURNA, ACTIO y LEOLEGUIZAMON y se seguirán contrastando con SEOT y BrandADN.
+
+Ver `docs/audit/ECOSYSTEM_PATTERN_MATRIX.md`.
 
 ## Estado
 
-Bootstrap de STANDARD v1 en desarrollo. Ver `docs/development/DEVELOPMENT_CHECKLIST.md`.
+Versión de desarrollo actual: `0.1.0`.
+
+No debe etiquetarse como `v1.0.0` ni declararse `CERTIFIED` hasta que los gates finales de `docs/development/DEVELOPMENT_CHECKLIST.md` estén cerrados con evidencia.
