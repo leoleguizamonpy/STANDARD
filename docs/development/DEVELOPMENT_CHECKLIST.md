@@ -2,227 +2,145 @@
 
 Objetivo: cerrar una primera versión utilizable, verificable y certificable de STANDARD.
 
-Regla: `[x]` significa evidencia implementada en repositorio. Un gate que depende de CI no se considera certificado hasta observar su ejecución PASS.
+Regla: `[x]` significa evidencia implementada y validada. La certificación final exige PASS sobre el HEAD exacto de `release/v1.0.0`.
 
-## FASE 0 — Bootstrap — COMPLETE
+## FASE 0 — Bootstrap — PASS
+- [x] Repositorio, README, FOUNDATION, AGENTS, VERSION y CHANGELOG.
+- [x] Arquitectura lógica/física inicial.
+- [x] `develop` establecido para STANDARD.
 
-- [x] Repositorio creado.
-- [x] `README.md`.
-- [x] `FOUNDATION.md`.
-- [x] `AGENTS.md`.
-- [x] `VERSION = 0.1.0`.
-- [x] `CHANGELOG.md`.
-- [x] arquitectura lógica/física inicial.
-- [x] `develop` creado para STANDARD.
-
-**Gate 0: PASS.**
-
-## FASE 1 — Gobernanza — COMPLETE
-
+## FASE 1 — Gobernanza — PASS
 - [x] autoridad scoped-by-responsibility.
 - [x] MUST / SHOULD / MAY.
-- [x] excepciones.
-- [x] ADR policy.
-- [x] SemVer.
-- [x] deprecación.
-- [x] migración explícita.
-- [x] source authority policy machine-readable.
+- [x] excepciones, ADR, SemVer, deprecación y migración.
+- [x] source authority machine-readable.
 
-**Gate 1: PASS.**
+## FASE 2 — Repositorio y Git — PASS
+- [x] `main` stable/certified.
+- [x] `mainline` y `develop` flows.
+- [x] ramas/prefixes, Conventional Commits, PR, merge y release policy.
+- [x] PR template y repository hygiene.
 
-## FASE 2 — Repositorio y Git — COMPLETE
+## FASE 3 — Documentación — PASS
+- [x] documentos obligatorios y autoridad documental.
+- [x] synchronization + anti-duplication.
+- [x] README / FOUNDATION / AGENTS / ADR templates.
 
-- [x] `main` como stable/certified.
-- [x] `mainline` flow.
-- [x] `develop` flow.
-- [x] ramas temporales/prefixes.
-- [x] Conventional Commits.
-- [x] Pull Requests.
-- [x] merge strategy.
-- [x] release/tagging.
-- [x] PR template.
-- [x] repository hygiene.
-
-**Gate 2: PASS.**
-
-## FASE 3 — Documentación — COMPLETE
-
-- [x] documentos obligatorios.
-- [x] autoridad documental.
-- [x] synchronization rule.
-- [x] anti-duplication rule.
-- [x] README template.
-- [x] FOUNDATION template.
-- [x] AGENTS template.
-- [x] ADR template.
-
-**Gate 3: PASS.**
-
-## FASE 4 — Arquitectura — COMPLETE
-
-- [x] arquitectura lógica.
-- [x] arquitectura física.
-- [x] domain ownership.
-- [x] dependency direction.
-- [x] cycle prohibition.
+## FASE 4 — Arquitectura — PASS
+- [x] domain ownership y dependency direction.
+- [x] cycle prohibition y false-shared-abstraction rule.
 - [x] core/domain/application/infrastructure/interface guidance.
-- [x] false shared abstraction rule.
-- [x] profile extension rule.
-- [x] architecture policy machine-readable.
+- [x] machine-readable architecture policy.
 
-**Gate 4: PASS documental/policy.** La automatización profunda de import boundaries queda profile/stack-specific.
-
-## FASE 5 — Perfiles v1 — COMPLETE
-
+## FASE 5 — Perfiles v1 — PASS
 - [x] `web-application`.
 - [x] `api`.
 - [x] `static-web`.
 - [x] `library`.
-- [x] perfiles no implementados no son aceptados por schema/bootstrap.
+- [x] perfiles no implementados bloqueados por schema/bootstrap.
 
-Diferidos a una versión posterior:
-
+Diferidos:
 - [ ] `saas`.
 - [ ] `ai-system`.
 
-**Gate 5: PASS para perfiles v1 soportados.**
-
-## FASE 6 — Contrato de adopción — COMPLETE
-
+## FASE 6 — Contrato de adopción — PASS
 - [x] `project.standard.yml`.
 - [x] JSON Schema draft 2020-12.
-- [x] versión.
-- [x] perfil.
-- [x] metadata de proyecto.
-- [x] Git flow.
-- [x] excepciones.
-- [x] validación ejecutable con AJV 2020 + YAML.
+- [x] versión, perfil, metadata, Git flow y excepciones.
+- [x] AJV 2020 + YAML.
 - [x] STANDARD adopta su propio contrato.
 
-**Gate 6: PASS.**
-
-## FASE 7 — Seguridad — COMPLETE BASELINE
-
-- [x] secretos prohibidos.
-- [x] `.env` / `.env.example` policy.
+## FASE 7 — Seguridad — PASS BASELINE
+- [x] secretos / env rules.
 - [x] dependency hygiene.
-- [x] input validation at trust boundaries.
-- [x] auth/authz scoped by applicability.
-- [x] secure errors/logging.
-- [x] P0/P1 security blockers.
-- [x] basic forbidden sensitive-file verifier.
+- [x] trust-boundary validation.
+- [x] auth/authz applicability.
+- [x] safe errors/logs.
+- [x] P0/P1 blockers.
+- [x] basic sensitive-file verifier.
 
-**Gate 7: PASS baseline.** Scanners avanzados quedan profile/stack-specific.
-
-## FASE 8 — Calidad y testing — COMPLETE BASELINE
-
+## FASE 8 — Calidad — PASS
 - [x] definition of done.
 - [x] applicable lint/typecheck/test/build model.
 - [x] architecture/documentation/security gates.
-- [x] no arbitrary universal coverage percentage.
+- [x] no arbitrary universal coverage target.
 - [x] P0/P1/P2/P3 severity.
-- [x] certification bound to exact commit/HEAD.
-- [x] distinction IMPLEMENTED / TESTED / INTEGRATED / CERTIFIED.
-- [x] CI parity rule.
+- [x] exact-HEAD certification.
+- [x] IMPLEMENTED / TESTED / INTEGRATED / CERTIFIED distinction.
 
-**Gate 8: PASS.**
-
-## FASE 9 — Verificador ejecutable — IMPLEMENTED
-
-- [x] Node 20+ runtime.
+## FASE 9 — Verificador — PASS
+- [x] Node runtime.
 - [x] `pnpm standard:verify`.
-- [x] required files.
-- [x] YAML parsing.
-- [x] JSON Schema 2020-12 validation.
-- [x] VERSION consistency.
-- [x] basic forbidden sensitive files.
-- [x] readable PASS/FAIL.
-- [x] exit 0 / non-zero semantics.
-- [x] first CI failure detected a real verifier defect and was corrected.
+- [x] required files, YAML, schema, VERSION consistency.
+- [x] PASS/FAIL + exit codes.
+- [x] first CI defect detected and corrected.
+- [x] clean CI PASS on integration HEAD `2ae992ff59d45da81b3025ba86dc83f51820c37a`.
 
-**Gate 9: awaiting clean CI PASS after fix.**
+## FASE 10 — Bootstrap — PASS
+- [x] `pnpm bootstrap`.
+- [x] profile selection.
+- [x] documentation + adoption contract generation.
+- [x] default mainline flow.
+- [x] refuses non-empty destination.
+- [x] generated project re-verified automatically.
 
-## FASE 10 — Bootstrap — IMPLEMENTED
-
-- [x] `pnpm bootstrap <name> [profile] [destination]`.
-- [x] supported profile selection.
-- [x] `project.standard.yml` generation.
-- [x] base docs generation.
-- [x] default `mainline` declaration.
-- [x] refuse non-empty destination.
-- [x] generated project is re-verified in self-test.
-
-**Gate 10: awaiting clean CI PASS.**
-
-## FASE 11 — CI — IMPLEMENTED
-
+## FASE 11 — CI — PASS INTEGRATION
 - [x] GitHub Actions workflow.
-- [x] push/PR triggers for `main` and `develop`.
-- [x] dependency install.
-- [x] conformance verification.
-- [x] self-tests.
-- [x] failure propagates to CI.
-- [x] failure evidence was observed on PR #1.
+- [x] push/PR triggers.
+- [x] conformance + self-tests.
+- [x] failure propagation proven.
+- [x] clean integration PASS observed.
+- [ ] release-candidate HEAD PASS.
 
-**Gate 11: awaiting first clean PASS.**
-
-## FASE 12 — Auditoría del ecosistema — COMPLETE
-
-- [x] TOURNA reviewed.
-- [x] ACTIO reviewed.
-- [x] LEOLEGUIZAMON reviewed.
-- [x] SEOT reviewed.
-- [x] BrandADN reviewed.
+## FASE 12 — Ecosystem Audit — PASS
+- [x] TOURNA.
+- [x] ACTIO.
+- [x] LEOLEGUIZAMON.
+- [x] SEOT.
+- [x] BrandADN.
 - [x] common/difference matrix.
-- [x] cross-project rules extracted.
 - [x] product-specific rules excluded.
-- [x] Git-flow assumption corrected from evidence.
-- [x] flat authority assumption corrected from SEOT evidence.
-- [x] exact-revision certification rule extracted from BrandADN/Tourna/ACTIO patterns.
+- [x] Git-flow assumption corrected.
+- [x] flat-authority assumption corrected.
+- [x] exact-revision certification extracted.
 
-**Gate 12: PASS.**
+## FASE 13 — Dogfooding — PASS INTEGRATION
+- [x] STANDARD self-adoption.
+- [x] valid fixture PASS.
+- [x] invalid fixture FAIL.
+- [x] generated fixture PASS.
+- [ ] repeat PASS on release-candidate HEAD.
 
-## FASE 13 — Dogfooding — IMPLEMENTED
-
-- [x] STANDARD has `project.standard.yml`.
-- [x] valid fixture must PASS.
-- [x] invalid fixture must FAIL.
-- [x] bootstrap fixture is generated.
-- [x] generated fixture must PASS verifier.
-
-**Gate 13: awaiting clean CI PASS.**
-
-## FASE 14 — v1.0.0 Certification — PENDING
-
-- [ ] CI PASS on integration PR after verifier fix.
-- [x] five-project ecosystem comparison.
-- [ ] final contradiction audit.
-- [ ] no P0/P1 blockers.
-- [ ] update version references from `0.1.0` to `1.0.0`.
-- [ ] update CHANGELOG for release.
-- [ ] merge certified candidate.
+## FASE 14 — v1.0.0 Certification — RELEASE CANDIDATE
+- [x] five-project audit.
+- [x] contradiction corrections applied.
+- [x] `VERSION = 1.0.0` on release branch.
+- [x] package/adoption/bootstrap/self-tests aligned to `1.0.0`.
+- [x] CHANGELOG release entry.
+- [ ] release PR CI PASS on exact HEAD.
+- [ ] confirm no P0/P1 blockers after release CI.
+- [ ] merge release candidate to `main`.
+- [ ] post-merge verification.
 - [ ] tag `v1.0.0`.
 
-**Gate final: NOT YET CERTIFIED.**
+**Gate final: RELEASE CANDIDATE — NOT YET CERTIFIED.**
 
 # Five required capabilities
 
-1. **Specify** — implemented.
-2. **Declare** — implemented.
-3. **Generate** — implemented.
-4. **Verify** — implemented; clean CI evidence pending.
-5. **Enforce** — implemented; failure already proven, PASS pending.
+1. **Specify** — PASS.
+2. **Declare** — PASS.
+3. **Generate** — PASS.
+4. **Verify** — PASS.
+5. **Enforce** — PASS integration; release confirmation pending.
 
-# Immediate path to v1.0.0
+# Remaining path
 
 ```text
-latest develop
-→ PR #1 CI PASS
-→ final contradiction audit
-→ remove P0/P1 blockers
-→ promote version 1.0.0
-→ release verification on exact HEAD
-→ merge
-→ post-merge verification
+release/v1.0.0
+→ release PR to main
+→ CI PASS on exact release HEAD
+→ merge with expected head
+→ verify resulting main
 → tag v1.0.0
+→ STANDARD v1.0.0 CERTIFIED
 ```
