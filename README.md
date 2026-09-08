@@ -6,9 +6,9 @@ Su función es definir cómo se inicializa, organiza, desarrolla, verifica, audi
 
 ## Estado
 
-**STANDARD v1.1.0 — CANDIDATE**
+**STANDARD v1.1.0 — CERTIFIED**
 
-La versión 1.1.0 formaliza `ROADMAP.md` como autoridad scoped-by-responsibility para secuencia, estado y evidencia de ejecución.
+La versión 1.1.0 formaliza `ROADMAP.md` como autoridad scoped-by-responsibility para secuencia, estado y evidencia de ejecución. La integración principal quedó verificada sobre `main@09a94750319e0a06ac8d816ced0d4ea166233f13` mediante `STANDARD Verify #43 = PASS`.
 
 ## Principio rector
 
