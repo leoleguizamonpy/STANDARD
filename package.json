@@ -1,0 +1,20 @@
+{
+  "name": "@leoleguizamon/standard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "standard:verify": "node scripts/verify/verify.mjs .",
+    "verify": "pnpm standard:verify",
+    "bootstrap": "node scripts/bootstrap/bootstrap.mjs"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.8.1"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.15.1"
+}
