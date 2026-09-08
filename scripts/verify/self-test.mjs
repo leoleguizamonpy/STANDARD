@@ -3,6 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
+const STANDARD_VERSION = '1.0.0';
 const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'standard-self-test-'));
 const validDir = path.join(tempRoot, 'valid');
 const invalidDir = path.join(tempRoot, 'invalid');
@@ -19,7 +20,7 @@ const baseFiles = {
   'project.standard.yml': [
     'standard:',
     '  repository: leoleguizamonpy/STANDARD',
-    '  version: 0.1.0',
+    `  version: ${STANDARD_VERSION}`,
     '  profile: web-application',
     'project:',
     '  name: fixture',
@@ -73,6 +74,7 @@ if (generatedVerification.status !== 0) {
 }
 
 console.log('STANDARD SELF TEST: PASS');
+console.log(`- standard version => ${STANDARD_VERSION}`);
 console.log('- valid fixture => PASS');
 console.log('- invalid fixture => FAIL');
 console.log('- bootstrap fixture => GENERATED + PASS');
