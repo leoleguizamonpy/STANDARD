@@ -1,11 +1,11 @@
 standard:
   repository: leoleguizamonpy/STANDARD
-  version: 1.0.0
+  version: 1.1.0
   profile: library
 project:
   name: STANDARD
-  version: 1.0.0
+  version: 1.1.0
   description: Versioned engineering standard, templates, policies and verification tooling.
 git:
-  flow: develop
+  flow: mainline
 exceptions: []

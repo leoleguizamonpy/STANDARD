@@ -2,6 +2,22 @@
 
 All notable changes to STANDARD are documented here.
 
+## [1.1.0] - 2026-09-08
+
+### Added
+- Formal `ROADMAP.md` authority for execution sequence, current state, blockers, evidence, known debt and next work.
+- `docs/roadmap/ROADMAP_STANDARD.md` with mandatory FOUNDATION/ROADMAP responsibility separation.
+- Canonical `templates/ROADMAP.template.md`.
+- Bootstrap-generated `ROADMAP.md` for new projects.
+- Self-test assertion that generated projects contain ROADMAP.
+- Canonical lifecycle distinction: `IMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED`.
+
+### Changed
+- Documentation and governance standards now explicitly define ROADMAP as a scoped project authority when development is evolving/phased.
+- FOUNDATION is explicitly prohibited from acting as the canonical progress tracker.
+- ROADMAP is explicitly prohibited from redefining product identity, scope, invariants, domain semantics or architecture authority.
+- STANDARD itself now uses `git.flow: mainline`, matching its stable-main + temporary-branch operating model.
+
 ## [1.0.0] - 2026-09-08
 
 ### Added

@@ -6,9 +6,9 @@ Su función es definir cómo se inicializa, organiza, desarrolla, verifica, audi
 
 ## Estado
 
-**STANDARD v1.0.0 — CERTIFIED**
+**STANDARD v1.1.0 — CANDIDATE**
 
-La certificación se apoya en verificación reproducible de integración, release candidate y `main` post-merge. La evidencia formal se conserva en `docs/certification/V1.0.0.md`.
+La versión 1.1.0 formaliza `ROADMAP.md` como autoridad scoped-by-responsibility para secuencia, estado y evidencia de ejecución.
 
 ## Principio rector
 
@@ -19,7 +19,7 @@ La certificación se apoya en verificación reproducible de integración, releas
 ```text
 STANDARD
   ↓
-FOUNDATION
+FOUNDATION + ROADMAP (responsabilidades separadas)
   ↓
 GOVERNANCE
   ↓
@@ -38,18 +38,49 @@ CERTIFICATION
 RELEASE
 ```
 
-## Capacidades v1.0.0
+## Separación FOUNDATION / ROADMAP
+
+Esta separación es obligatoria:
+
+```text
+FOUNDATION.md
+→ qué es el producto
+→ propósito
+→ alcance
+→ invariantes
+→ non-goals
+→ límites de dominio
+
+ROADMAP.md
+→ dónde está el proyecto
+→ qué está terminado
+→ qué está en progreso
+→ bloqueos
+→ evidencia
+→ deuda conocida
+→ qué sigue
+→ criterio de cierre
+```
+
+`ROADMAP.md` no puede redefinir identidad, alcance, invariantes, semántica de dominio ni arquitectura. Si durante la ejecución se descubre que alguno de esos conceptos debe cambiar, la modificación debe hacerse en la autoridad correspondiente.
+
+`FOUNDATION.md` no debe convertirse en un tracker de progreso.
+
+Contrato completo: `docs/roadmap/ROADMAP_STANDARD.md`.
+
+## Capacidades
 
 STANDARD puede:
 
 1. definir reglas universales de arquitectura, Git, documentación, seguridad y calidad;
 2. declarar adopción mediante `project.standard.yml`;
 3. generar un proyecto mínimo mediante bootstrap;
-4. verificar conformidad básica de forma ejecutable;
-5. ejecutar casos positivos/negativos de self-test;
-6. bloquear CI cuando la verificación falla;
-7. diferenciar implementación, testing, integración y certificación;
-8. vincular una certificación formal al commit/HEAD exacto evaluado.
+4. generar `FOUNDATION.md` y `ROADMAP.md` con responsabilidades separadas;
+5. verificar conformidad básica de forma ejecutable;
+6. ejecutar casos positivos/negativos de self-test;
+7. bloquear CI cuando la verificación falla;
+8. diferenciar implementación, testing, integración, certificación y cierre;
+9. vincular una certificación formal al commit/HEAD exacto evaluado.
 
 ## Arquitectura física
 
@@ -57,6 +88,7 @@ STANDARD puede:
 STANDARD/
 ├── README.md
 ├── FOUNDATION.md
+├── ROADMAP.md
 ├── AGENTS.md
 ├── CHANGELOG.md
 ├── VERSION
@@ -70,12 +102,9 @@ STANDARD/
 │   ├── git/
 │   ├── governance/
 │   ├── quality/
+│   ├── roadmap/
 │   └── security/
 ├── profiles/
-│   ├── web-application/
-│   ├── api/
-│   ├── static-web/
-│   └── library/
 ├── templates/
 ├── schemas/
 ├── policies/
@@ -87,38 +116,10 @@ STANDARD/
     └── workflows/
 ```
 
-Perfiles `saas` y `ai-system` están deliberadamente diferidos hasta que existan reglas comprobadas suficientes para justificarlos.
-
-## Instalación
-
-Requisitos:
-
-- Node.js 20+
-- Corepack
-- pnpm 10.15.1
-
-```bash
-corepack enable
-pnpm install
-```
-
 ## Verificación
 
 ```bash
 pnpm verify
-```
-
-El comando ejecuta:
-
-```text
-STANDARD conformance
-→ schema validation
-→ required-file checks
-→ basic secret-file checks
-→ positive fixture
-→ negative fixture
-→ bootstrap generation
-→ verification of generated project
 ```
 
 Resultado esperado:
@@ -134,20 +135,15 @@ STANDARD SELF TEST: PASS
 pnpm bootstrap <project-name> [profile] [destination]
 ```
 
-Ejemplo:
+El bootstrap 1.1.0 genera por defecto:
 
-```bash
-pnpm bootstrap NEXUS web-application ../NEXUS
-```
-
-Perfiles v1 disponibles:
-
-- `web-application`
-- `api`
-- `static-web`
-- `library`
-
-El bootstrap se niega a sobrescribir un destino no vacío.
+- `README.md`
+- `FOUNDATION.md`
+- `ROADMAP.md`
+- `AGENTS.md`
+- `CHANGELOG.md`
+- `VERSION`
+- `project.standard.yml`
 
 ## Contrato de adopción
 
@@ -156,7 +152,7 @@ Cada proyecto adopta una versión concreta mediante `project.standard.yml`.
 ```yaml
 standard:
   repository: leoleguizamonpy/STANDARD
-  version: 1.0.0
+  version: 1.1.0
   profile: web-application
 project:
   name: NEXUS
@@ -166,11 +162,9 @@ git:
 exceptions: []
 ```
 
-La configuración se valida contra `schemas/project.standard.schema.json`.
+## Git flow recomendado
 
-## Flujos Git soportados
-
-### mainline
+STANDARD mismo opera con `mainline`:
 
 ```text
 main
@@ -181,42 +175,22 @@ PR + gates
   ↓
 main validado
   ↓
-eliminar rama
+eliminar rama física
 ```
 
-### develop
+## Lifecycle de estado
+
+STANDARD 1.1.0 formaliza:
 
 ```text
-main
-  ↓
-develop
-  ↓
-rama temporal
-  ↓
-develop
-  ↓
-release
-  ↓
-main
+IMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED
 ```
 
-`mainline` es preferible cuando una rama permanente de integración no aporta valor real. `develop` es una decisión explícita del proyecto, no una obligación universal.
-
-## Autoridad scoped-by-responsibility
-
-STANDARD no usa una jerarquía documental plana para todo:
-
-- `FOUNDATION.md` gobierna identidad, propósito, alcance e invariantes;
-- arquitectura gobierna boundaries y dirección de dependencias;
-- contratos gobiernan semántica funcional dentro de su dominio;
-- governance gobierna flujo de desarrollo e integración;
-- ADRs registran decisiones dentro de un alcance concreto.
-
-Ninguna fuente debe reclamar autoridad fuera de su responsabilidad.
+Un estado más fuerte requiere evidencia propia; no puede inferirse de uno más débil.
 
 ## Fuente empírica
 
-STANDARD v1 se contrastó con patrones presentes en:
+STANDARD se contrastó con patrones presentes en:
 
 - TOURNA
 - ACTIO
@@ -228,4 +202,4 @@ Ver `docs/audit/ECOSYSTEM_PATTERN_MATRIX.md`.
 
 ## Evolución
 
-`1.0.0` es la primera baseline estable. Nuevos perfiles, migradores, scanners avanzados o generadores por stack deben incorporarse mediante nuevas versiones sin reescribir retrospectivamente las reglas certificadas de v1.0.0.
+Los proyectos permanecen gobernados por la versión que declaran hasta que migren explícitamente. Una nueva versión de STANDARD no invalida retroactivamente una adopción anterior.
