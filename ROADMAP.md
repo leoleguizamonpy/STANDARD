@@ -2,47 +2,56 @@
 
 ## Estado general
 
-- Estado: `CLOSED`
-- Versión: `1.1.0`
-- Baseline previa certificada: `1.0.0`
-- Fase activa: ninguna; 1.1.0 cerrada
-- Integración principal: `09a94750319e0a06ac8d816ced0d4ea166233f13`
-- Evidencia principal: `STANDARD Verify #43 = PASS`
-- Inventario remoto tras integración: solo `main`
+- Estado: `IN PROGRESS`
+- Versión objetivo: `1.2.0`
+- Baseline previa certificada: `1.1.0`
+- Fase activa: separación Architecture / Domain-Contracts / ADR
+- SHA certificado/verificado: pendiente de CI y merge
 
-## Secuencia 1.1.0
+## Secuencia 1.2.0
 
 | Fase / Hito | Estado | Evidencia | Criterio de cierre |
 |---|---|---|---|
-| Definir autoridad ROADMAP | CLOSED | `docs/roadmap/ROADMAP_STANDARD.md` | contrato normativo presente |
-| Añadir plantilla canónica | CLOSED | `templates/ROADMAP.template.md` | plantilla presente |
-| Integrar con Documentation/Governance | CLOSED | docs actualizados | límites FOUNDATION/ROADMAP explícitos |
-| Generar ROADMAP en bootstrap | CLOSED | bootstrap + self-test | fixture generado contiene ROADMAP |
-| Alinear STANDARD con mainline | CLOSED | `project.standard.yml` | `git.flow: mainline` |
-| Verificación de rama | CLOSED | `STANDARD Verify #42 = PASS` sobre `9e01a9cfd5656d5d5f85e9ab5ccf83df5253059d` | gate PASS sobre HEAD exacto |
-| Integración | CLOSED | PR #6 squash merge | cambio integrado en `main@09a94750319e0a06ac8d816ced0d4ea166233f13` |
-| Verificación post-merge | CLOSED | `STANDARD Verify #43 = PASS` | gate integrado PASS |
-| Limpieza física | CLOSED | inventario remoto | solo `main` |
+| Definir Domain/Contract authority | IMPLEMENTED | `docs/domain/DOMAIN_CONTRACT_STANDARD.md` | autoridad funcional explícita |
+| Formalizar ADR authority | IMPLEMENTED | `docs/adr/ADR_STANDARD.md` | ADR separado de current truth |
+| Separar Architecture | IMPLEMENTED | `docs/architecture/ARCHITECTURE_RULES.md` | estructura técnica sin semántica duplicada |
+| Propagar a bootstrap | IMPLEMENTED | `scripts/bootstrap/bootstrap.mjs` | directorios y autoridades separados |
+| Versionar 1.2.0 | IMPLEMENTED | VERSION/package/project config | metadata alineada |
+| Verificación de rama | NOT STARTED | CI | `pnpm verify` PASS |
+| Integración | NOT STARTED | PR | merge a main |
+| Verificación post-merge | NOT STARTED | CI | PASS sobre main |
+| Limpieza física | NOT STARTED | inventario remoto | solo main |
 
 ## Bloqueos
 
-- Ninguno.
+- Ninguno conocido.
 
 ## Deuda conocida
 
-- La validación semántica profunda del contenido de ROADMAP permanece documental para evitar heurísticas frágiles. El bootstrap y self-test garantizan la generación del documento; futuras versiones pueden añadir validación estructural más rica si existe evidencia suficiente.
+- La verificación semántica profunda de ownership documental sigue siendo principalmente normativa; se automatizará solo donde sea determinista.
 
 ## Próximo trabajo
 
-- Ningún trabajo requerido para cerrar 1.1.0.
-- Futuras ampliaciones deben abrir una nueva rama temporal y una nueva versión cuando introduzcan reglas o capacidades normativas.
+1. ejecutar CI de 1.2.0;
+2. integrar por PR;
+3. verificar main post-merge;
+4. eliminar físicamente la rama temporal;
+5. cerrar 1.2.0 con evidencia exacta.
+
+## Regla de autoridad
+
+```text
+FOUNDATION = product identity and invariants
+ROADMAP = execution state and sequence
+GOVERNANCE = development/change rules
+ARCHITECTURE = technical structure
+DOMAIN / CONTRACTS = functional meaning and invariants
+ADR = decision rationale/history
+VERIFICATION / CERTIFICATION = evidence
+```
 
 ## Regla de estado
 
 ```text
 IMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED
 ```
-
-## Límite de autoridad
-
-Este ROADMAP describe secuencia, estado, evidencia, bloqueos, deuda y siguiente trabajo de STANDARD. No redefine la identidad ni los principios normativos de `FOUNDATION.md`, ni sustituye documentación de arquitectura, governance o políticas.
