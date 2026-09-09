@@ -6,81 +6,73 @@ Su función es definir cómo se inicializa, organiza, desarrolla, verifica, audi
 
 ## Estado
 
-**STANDARD v1.1.0 — CERTIFIED**
+**STANDARD v1.2.0 — CANDIDATE**
 
-La versión 1.1.0 formaliza `ROADMAP.md` como autoridad scoped-by-responsibility para secuencia, estado y evidencia de ejecución. La integración principal quedó verificada sobre `main@09a94750319e0a06ac8d816ced0d4ea166233f13` mediante `STANDARD Verify #43 = PASS`.
+La versión 1.2.0 formaliza la separación de autoridad entre Architecture, Domain/Contracts y ADR, manteniendo la separación FOUNDATION/ROADMAP/GOVERNANCE introducida previamente.
 
 ## Principio rector
 
 > STANDARD gobierna cómo construimos. Cada producto decide qué construimos.
 
-## Cadena de autoridad
+## Modelo de autoridades
 
 ```text
-STANDARD
-  ↓
-FOUNDATION + ROADMAP (responsabilidades separadas)
-  ↓
+FOUNDATION
+→ qué es el producto y qué debe permanecer verdadero
+
+ROADMAP
+→ dónde está la ejecución y qué sigue
+
 GOVERNANCE
-  ↓
+→ bajo qué reglas se desarrolla, integra y cambia
+
 ARCHITECTURE
-  ↓
-PROFILES + POLICIES + TEMPLATES
-  ↓
-IMPLEMENTATION
-  ↓
-VERIFICATION
-  ↓
-AUDIT
-  ↓
-CERTIFICATION
-  ↓
-RELEASE
+→ cómo está estructurado técnicamente
+
+DOMAIN / CONTRACTS
+→ qué significan los conceptos y cómo se comportan funcionalmente
+
+ADR
+→ por qué se tomó una decisión y qué autoridad fue modificada
+
+VERIFICATION / CERTIFICATION
+→ qué evidencia demuestra conformidad y cierre
 ```
 
-## Separación FOUNDATION / ROADMAP
+La separación es obligatoria. Ninguna fuente debe reclamar autoridad fuera de su responsabilidad.
 
-Esta separación es obligatoria:
+## Regla Architecture / Domain / ADR
 
 ```text
-FOUNDATION.md
-→ qué es el producto
-→ propósito
-→ alcance
-→ invariantes
-→ non-goals
-→ límites de dominio
-
-ROADMAP.md
-→ dónde está el proyecto
-→ qué está terminado
-→ qué está en progreso
-→ bloqueos
-→ evidencia
-→ deuda conocida
-→ qué sigue
-→ criterio de cierre
+ARCHITECTURE = technical structure, boundaries and dependency direction
+DOMAIN / CONTRACTS = business meaning, invariants and boundary behavior
+ADR = rationale, alternatives, consequences and supersession history
 ```
 
-`ROADMAP.md` no puede redefinir identidad, alcance, invariantes, semántica de dominio ni arquitectura. Si durante la ejecución se descubre que alguno de esos conceptos debe cambiar, la modificación debe hacerse en la autoridad correspondiente.
+Un ADR no puede ser la única fuente de verdad actual. Si una decisión modifica Architecture, Domain, Governance, FOUNDATION o ROADMAP, la autoridad propietaria debe actualizarse en el mismo cambio gobernado.
 
-`FOUNDATION.md` no debe convertirse en un tracker de progreso.
+Contratos completos:
 
-Contrato completo: `docs/roadmap/ROADMAP_STANDARD.md`.
+- `docs/architecture/ARCHITECTURE_RULES.md`
+- `docs/domain/DOMAIN_CONTRACT_STANDARD.md`
+- `docs/adr/ADR_STANDARD.md`
+- `docs/roadmap/ROADMAP_STANDARD.md`
+- `docs/governance/GOVERNANCE_STANDARD.md`
 
 ## Capacidades
 
 STANDARD puede:
 
 1. definir reglas universales de arquitectura, Git, documentación, seguridad y calidad;
-2. declarar adopción mediante `project.standard.yml`;
-3. generar un proyecto mínimo mediante bootstrap;
-4. generar `FOUNDATION.md` y `ROADMAP.md` con responsabilidades separadas;
-5. verificar conformidad básica de forma ejecutable;
-6. ejecutar casos positivos/negativos de self-test;
-7. bloquear CI cuando la verificación falla;
-8. diferenciar implementación, testing, integración, certificación y cierre;
-9. vincular una certificación formal al commit/HEAD exacto evaluado.
+2. separar autoridades por responsabilidad;
+3. declarar adopción mediante `project.standard.yml`;
+4. generar un proyecto mínimo mediante bootstrap;
+5. generar FOUNDATION y ROADMAP con responsabilidades separadas;
+6. preparar espacios diferenciados para Architecture, Domain y ADR;
+7. verificar conformidad básica de forma ejecutable;
+8. ejecutar self-tests;
+9. bloquear CI cuando la verificación falla;
+10. diferenciar implementación, testing, integración, certificación y cierre.
 
 ## Arquitectura física
 
@@ -95,25 +87,23 @@ STANDARD/
 ├── project.standard.yml
 ├── docs/
 │   ├── architecture/
+│   ├── adr/
+│   ├── domain/
+│   ├── governance/
+│   ├── roadmap/
 │   ├── audit/
 │   ├── certification/
 │   ├── development/
 │   ├── documentation/
 │   ├── git/
-│   ├── governance/
 │   ├── quality/
-│   ├── roadmap/
 │   └── security/
 ├── profiles/
 ├── templates/
 ├── schemas/
 ├── policies/
 ├── scripts/
-│   ├── bootstrap/
-│   └── verify/
 └── .github/
-    ├── PULL_REQUEST_TEMPLATE.md
-    └── workflows/
 ```
 
 ## Verificación
@@ -122,37 +112,20 @@ STANDARD/
 pnpm verify
 ```
 
-Resultado esperado:
-
-```text
-STANDARD VERIFY: PASS
-STANDARD SELF TEST: PASS
-```
-
 ## Crear un proyecto nuevo
 
 ```bash
 pnpm bootstrap <project-name> [profile] [destination]
 ```
 
-El bootstrap 1.1.0 genera por defecto:
-
-- `README.md`
-- `FOUNDATION.md`
-- `ROADMAP.md`
-- `AGENTS.md`
-- `CHANGELOG.md`
-- `VERSION`
-- `project.standard.yml`
+El bootstrap 1.2.0 crea las autoridades base y prepara directorios separados para Architecture, Domain y ADR.
 
 ## Contrato de adopción
-
-Cada proyecto adopta una versión concreta mediante `project.standard.yml`.
 
 ```yaml
 standard:
   repository: leoleguizamonpy/STANDARD
-  version: 1.1.0
+  version: 1.2.0
   profile: web-application
 project:
   name: NEXUS
@@ -162,9 +135,9 @@ git:
 exceptions: []
 ```
 
-## Git flow recomendado
+## Git flow
 
-STANDARD mismo opera con `mainline`:
+STANDARD opera con `mainline`:
 
 ```text
 main
@@ -180,26 +153,10 @@ eliminar rama física
 
 ## Lifecycle de estado
 
-STANDARD 1.1.0 formaliza:
-
 ```text
 IMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED
 ```
 
-Un estado más fuerte requiere evidencia propia; no puede inferirse de uno más débil.
-
-## Fuente empírica
-
-STANDARD se contrastó con patrones presentes en:
-
-- TOURNA
-- ACTIO
-- LEOLEGUIZAMON
-- SEOT
-- BrandADN
-
-Ver `docs/audit/ECOSYSTEM_PATTERN_MATRIX.md`.
-
 ## Evolución
 
-Los proyectos permanecen gobernados por la versión que declaran hasta que migren explícitamente. Una nueva versión de STANDARD no invalida retroactivamente una adopción anterior.
+Los proyectos permanecen gobernados por la versión que declaran hasta que migren explícitamente. Una nueva versión no invalida retroactivamente una adopción anterior.

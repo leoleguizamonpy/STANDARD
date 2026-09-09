@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
-const STANDARD_VERSION = '1.1.0';
+const STANDARD_VERSION = '1.2.0';
 const INITIAL_PROJECT_VERSION = '0.1.0';
 const [, , projectName, profile = 'web-application', destinationArg] = process.argv;
 const allowedProfiles = new Set(['web-application', 'api', 'static-web', 'library']);
@@ -24,15 +24,15 @@ if (fs.existsSync(destination) && fs.readdirSync(destination).length > 0) {
 }
 
 fs.mkdirSync(destination, { recursive: true });
-for (const dir of ['docs/architecture', 'docs/adr', 'src', 'tests', 'scripts']) {
+for (const dir of ['docs/architecture', 'docs/domain', 'docs/adr', 'src', 'tests', 'scripts']) {
   fs.mkdirSync(path.join(destination, dir), { recursive: true });
 }
 
 const files = {
-  'README.md': `# ${projectName}\n\nProject generated from leoleguizamonpy/STANDARD.\n\n## STANDARD\n\n- Version: ${STANDARD_VERSION}\n- Profile: ${profile}\n- Git flow: mainline\n\n## Authorities\n\n- FOUNDATION.md — product identity, scope and invariants\n- ROADMAP.md — execution sequence, current state and evidence\n`,
+  'README.md': `# ${projectName}\n\nProject generated from leoleguizamonpy/STANDARD.\n\n## STANDARD\n\n- Version: ${STANDARD_VERSION}\n- Profile: ${profile}\n- Git flow: mainline\n\n## Authorities\n\n- FOUNDATION.md — product identity, scope and invariants\n- ROADMAP.md — execution sequence, current state and evidence\n- docs/architecture — technical structure and dependency direction\n- docs/domain — business semantics, invariants and contracts\n- docs/adr — rationale and decision history\n`,
   'FOUNDATION.md': `# FOUNDATION — ${projectName}\n\n## Problem\n\nTBD\n\n## Purpose\n\nTBD\n\n## Scope\n\nTBD\n\n## Non-goals\n\nTBD\n\n## Domain boundaries\n\nTBD\n\n## Invariants\n\n- TBD\n`,
-  'ROADMAP.md': `# ROADMAP — ${projectName}\n\n## Estado general\n\n- Estado: NOT STARTED\n- Versión/baseline: ${INITIAL_PROJECT_VERSION}\n- STANDARD: ${STANDARD_VERSION}\n- Fase activa: TBD\n- SHA certificado/verificado: TBD\n\n## Secuencia\n\n| Fase / Hito | Estado | Evidencia | Criterio de cierre |\n|---|---|---|---|\n| 00 — Foundation | NOT STARTED | TBD | TBD |\n| 01 — Architecture | NOT STARTED | TBD | TBD |\n| 02 — Implementation | NOT STARTED | TBD | TBD |\n| 03 — Verification | NOT STARTED | TBD | TBD |\n| 04 — Certification / Closure | NOT STARTED | TBD | TBD |\n\n## Bloqueos\n\n- Ninguno declarado.\n\n## Deuda conocida\n\n- Ninguna declarada.\n\n## Próximo trabajo\n\n- TBD\n\n## Regla de estado\n\nIMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED\n\n## Límite de autoridad\n\nROADMAP gobierna secuencia, estado, evidencia, bloqueos, deuda y siguiente trabajo. No redefine identidad, alcance, invariantes, dominios ni arquitectura del producto.\n`,
-  'AGENTS.md': `# AGENTS — ${projectName}\n\nFollow FOUNDATION.md, ROADMAP.md, adopted STANDARD rules, ADRs and repository policies. FOUNDATION owns product identity/scope/invariants. ROADMAP owns execution state/sequence/evidence and must not redefine product or architecture authority. Run required verification before declaring completion.\n`,
+  'ROADMAP.md': `# ROADMAP — ${projectName}\n\n## Estado general\n\n- Estado: NOT STARTED\n- Versión/baseline: ${INITIAL_PROJECT_VERSION}\n- STANDARD: ${STANDARD_VERSION}\n- Fase activa: TBD\n- SHA certificado/verificado: TBD\n\n## Secuencia\n\n| Fase / Hito | Estado | Evidencia | Criterio de cierre |\n|---|---|---|---|\n| 00 — Foundation | NOT STARTED | TBD | TBD |\n| 01 — Architecture / Domain | NOT STARTED | TBD | TBD |\n| 02 — Implementation | NOT STARTED | TBD | TBD |\n| 03 — Verification | NOT STARTED | TBD | TBD |\n| 04 — Certification / Closure | NOT STARTED | TBD | TBD |\n\n## Bloqueos\n\n- Ninguno declarado.\n\n## Deuda conocida\n\n- Ninguna declarada.\n\n## Próximo trabajo\n\n- TBD\n\n## Regla de estado\n\nIMPLEMENTED != TESTED != INTEGRATED != CERTIFIED != CLOSED\n\n## Límite de autoridad\n\nROADMAP gobierna secuencia, estado, evidencia, bloqueos, deuda y siguiente trabajo. No redefine identidad, alcance, invariantes, dominios ni arquitectura del producto.\n`,
+  'AGENTS.md': `# AGENTS — ${projectName}\n\nFollow FOUNDATION.md, ROADMAP.md, adopted STANDARD rules, architecture, domain/contracts, ADRs and repository policies. FOUNDATION owns product identity/scope/invariants. ROADMAP owns execution state/sequence/evidence. Architecture owns technical structure. Domain/contracts own functional meaning and invariants. ADRs record rationale and history, not current truth by themselves. Run required verification before declaring completion.\n`,
   'CHANGELOG.md': `# Changelog\n\n## ${INITIAL_PROJECT_VERSION}\n\n- Initial bootstrap.\n`,
   'VERSION': `${INITIAL_PROJECT_VERSION}\n`,
   'project.standard.yml': `standard:\n  repository: leoleguizamonpy/STANDARD\n  version: ${STANDARD_VERSION}\n  profile: ${profile}\nproject:\n  name: ${projectName}\n  version: ${INITIAL_PROJECT_VERSION}\ngit:\n  flow: mainline\nexceptions: []\n`
@@ -54,4 +54,4 @@ console.log(`Project version: ${INITIAL_PROJECT_VERSION}`);
 console.log(`Profile: ${profile}`);
 console.log('Git flow: mainline');
 console.log(`Destination: ${destination}`);
-console.log('Next: complete FOUNDATION.md, ROADMAP.md and project-specific architecture before feature development.');
+console.log('Next: complete FOUNDATION.md, ROADMAP.md, architecture and domain authorities before feature development.');
